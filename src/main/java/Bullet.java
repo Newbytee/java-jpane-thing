@@ -4,7 +4,7 @@ class Bullet {
     private int y;
 
     Bullet(int x) {
-        this.x = x;
+        this.x = x + 100;
         y = 350;
     }
 
@@ -14,6 +14,10 @@ class Bullet {
 
     int getY() {
         return y;
+    }
+
+    void setY(int y) {
+        this.y = y;
     }
 
     void modifyY(int y) {

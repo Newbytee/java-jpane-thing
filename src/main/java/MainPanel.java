@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Random;
 
 public class MainPanel extends javax.swing.JPanel {
@@ -31,20 +32,23 @@ public class MainPanel extends javax.swing.JPanel {
                 }
 
                 if ((spawnTimer % 10) == 0) {
-                    for (int i = 0; i < dots.size(); i++) {
-                        dots.get(i).modifyCoords(0, 1);
-                        if (dots.get(i).getY() > 400 - dots.get(i).getRadius()) {
+                    for (Dot dot : dots) {
+                        dot.modifyCoords(0, 1);
+                        if (dot.getY() > 400 - dot.getRadius()) {
                             playerHp--;
-                            dots.remove(i);
                             flashCounter = 50;
                             System.out.println(playerHp);
                         }
                     }
                 }
 
-                if ((spawnTimer % 10) == 0) {
-                    for (Bullet bullet : bullets) {
-                        bullet.modifyY(-1);
+                for (Bullet bullet : bullets) {
+                    bullet.modifyY(-2);
+                    for (Dot dot : dots) {
+                        if ((dot.getY() == bullet.getY()) && ((dot.getX() <= bullet.getX()) && (dot.getX() + 20 >= bullet.getX()))) {
+                            dot.setY(500);
+                            bullet.setY(-10);
+                        }
                     }
                 }
 
@@ -78,12 +82,26 @@ public class MainPanel extends javax.swing.JPanel {
 
         gfx.setColor(Color.CYAN);
         for (Bullet bullet : bullets) {
-            gfx.fillRect(bullet.getX(), bullet.getY(), 10, 20);
+            if (bullet.getY() < 0) {
+                try {
+                    bullets.remove(bullet);
+                } catch (ConcurrentModificationException err) {
+                    throw err;
+                }
+            }
+            gfx.fillRect(bullet.getX(), bullet.getY(), 4, 20);
             System.out.println(bullet.getX() + "\t" + bullet.getY());
         }
 
         gfx.setColor(Color.WHITE);
         for (Dot dot : dots) {
+            if (dot.getY() > 350) {
+                try {
+                    dots.remove(dot);
+                } catch (ConcurrentModificationException err) {
+                    throw err;
+                }
+            }
             gfx.fillOval(dot.getX(), dot.getY(), dot.getRadius() * 2, dot.getRadius() * 2);
         }
 

@@ -1,28 +1,29 @@
 public class Dot {
     private int x, y, radius;
 
-    public Dot() {
-    }
-
-    public Dot(int x, int y, int radius) {
+    Dot(int x, int y, int radius) {
         this.x = x;
         this.y = y;
         this.radius = radius;
     }
 
-    public int getX() {
+    int getX() {
         return this.x;
     }
 
-    public int getY() {
+    int getY() {
         return this.y;
     }
 
-    public int getRadius() {
+    int getRadius() {
         return this.radius;
     }
 
-    public void modifyCoords(int modX, int modY) {
+    void setY(int y) {
+        this.y = y;
+    }
+
+    void modifyCoords(int modX, int modY) {
         this.x += modX;
         this.y += modY;
     }
