@@ -48,7 +48,7 @@ public class MainFrame extends JFrame {
                         Player.modPlayerX(10);
                         break;
                     case 32:
-
+                        MainPanel.shoot();
                         break;
                 }
                 if (debug) System.out.println("KeyCode: " + e.getKeyCode() + "\nKeyChar: " + e.getKeyChar() + "\nExtended KeyCode: " + e.getExtendedKeyCode());
