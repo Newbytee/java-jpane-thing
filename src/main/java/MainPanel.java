@@ -11,7 +11,7 @@ public class MainPanel extends javax.swing.JPanel {
     private static Random randomGen = new Random();
     private int spawnTimer;
     private int flashCounter = 0;
-    private int playerHp = 0;
+    private int playerHp = 100;
     private int score = 0;
     private double gameSpeed = 1.0;
     private boolean shouldRun = true;
