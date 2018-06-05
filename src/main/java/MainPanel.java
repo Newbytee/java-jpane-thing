@@ -10,7 +10,9 @@ public class MainPanel extends javax.swing.JPanel {
     private static Random randomGen = new Random();
     private int spawnTimer;
     private int flashCounter = 0;
-    private int playerHp = 3;
+    private int playerHp = 100;
+    private int score = 0;
+    private double gameSpeed = 1.0;
     private boolean shouldRun = true;
     private boolean displayDmg = false;
 
@@ -19,22 +21,23 @@ public class MainPanel extends javax.swing.JPanel {
         Player.setPlayerX(0);
         Player.setPlayerY(350);
 
-        final long timeInterval = 10;
+        final long timeInterval = 1;
         spawnTimer = 0;
 
         Runnable runnable = () -> {
             while (shouldRun) {
-                if (spawnTimer >= 300) {
+                if (spawnTimer >= 1000 * gameSpeed) {
                     dots.add(new Dot(randomGen.nextInt(500), 0, randomGen.nextInt(5) + 5));
                     spawnTimer = 0;
+                    gameSpeed -= 0.001;
                 } else {
                     spawnTimer++;
                 }
 
-                if ((spawnTimer % 10) == 0) {
+                if ((spawnTimer % 100) == 0) {
                     for (Dot dot : dots) {
                         dot.modifyCoords(0, 1);
-                        if (dot.getY() > 400 - dot.getRadius()) {
+                        if (dot.getY() > 350 - dot.getRadius()) {
                             playerHp--;
                             flashCounter = 50;
                             System.out.println(playerHp);
@@ -48,6 +51,7 @@ public class MainPanel extends javax.swing.JPanel {
                         if ((dot.getY() == bullet.getY()) && ((dot.getX() <= bullet.getX()) && (dot.getX() + 20 >= bullet.getX()))) {
                             dot.setY(500);
                             bullet.setY(-10);
+                            score += dot.getRadius();
                         }
                     }
                 }
@@ -108,6 +112,14 @@ public class MainPanel extends javax.swing.JPanel {
         gfx.setColor(Color.RED);
         gfx.fillOval(Player.getPlayerX(), Player.getPlayerY(), 200, 200);
 
+        gfx.drawString(Integer.toString(playerHp) + " HP", 10, 20);
+        gfx.drawString(Integer.toString(score) + " points", 10, 40);
+        
+        if (playerHp < 0) {
+            gfx.drawString("GAME OVER!!!!", 200, 150);
+            shouldRun = false;
+        }
+        
         if (displayDmg) {
             gfx.fillRect(400, 0, 500, 400);
         }
