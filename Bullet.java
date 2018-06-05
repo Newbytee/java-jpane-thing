@@ -1,3 +1,5 @@
+package jpanelthingy;
+
 class Bullet {
 
     private int x;

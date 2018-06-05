@@ -1,3 +1,5 @@
+package jpanelthingy;
+
 public class Dot {
     private int x, y, radius;
 

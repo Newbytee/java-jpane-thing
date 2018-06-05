@@ -1,6 +1,9 @@
+package jpanelthingy;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.Random;
 
 public class MainPanel extends javax.swing.JPanel {
@@ -10,7 +13,7 @@ public class MainPanel extends javax.swing.JPanel {
     private static Random randomGen = new Random();
     private int spawnTimer;
     private int flashCounter = 0;
-    private int playerHp = 100;
+    private int playerHp = 0;
     private int score = 0;
     private double gameSpeed = 1.0;
     private boolean shouldRun = true;
@@ -84,29 +87,26 @@ public class MainPanel extends javax.swing.JPanel {
     protected void paintComponent(Graphics gfx) {
         super.paintComponent(gfx);
 
-        gfx.setColor(Color.CYAN);
-        for (Bullet bullet : bullets) {
+        gfx.setColor(Color.CYAN);        
+        for (Iterator<Bullet> iterator = bullets.iterator(); iterator.hasNext();) {
+            Bullet bullet = iterator.next();
             if (bullet.getY() < 0) {
-                try {
-                    bullets.remove(bullet);
-                } catch (ConcurrentModificationException err) {
-                    throw err;
-                }
+                iterator.remove();
             }
             gfx.fillRect(bullet.getX(), bullet.getY(), 4, 20);
             System.out.println(bullet.getX() + "\t" + bullet.getY());
         }
 
         gfx.setColor(Color.WHITE);
-        for (Dot dot : dots) {
+        for (Iterator<Dot> iterator = dots.iterator(); iterator.hasNext();) {
+            Dot dot = iterator.next();
             if (dot.getY() > 350) {
-                try {
-                    dots.remove(dot);
-                } catch (ConcurrentModificationException err) {
-                    throw err;
-                }
+                iterator.remove();
             }
             gfx.fillOval(dot.getX(), dot.getY(), dot.getRadius() * 2, dot.getRadius() * 2);
+        }
+        for (Dot dot : dots) {
+            
         }
 
         gfx.setColor(Color.RED);
@@ -116,7 +116,7 @@ public class MainPanel extends javax.swing.JPanel {
         gfx.drawString(Integer.toString(score) + " points", 10, 40);
         
         if (playerHp < 0) {
-            gfx.drawString("GAME OVER!!!!", 200, 150);
+            gfx.drawString("GAME OVER", 220, 150);
             shouldRun = false;
         }
         

@@ -1,3 +1,5 @@
+package jpanelthingy;
+
 public class Player extends MainPanel {
     private static int playerX, playerY;
 
