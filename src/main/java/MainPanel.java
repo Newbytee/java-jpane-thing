@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -28,7 +27,7 @@ public class MainPanel extends javax.swing.JPanel {
         Runnable runnable = () -> {
             while (shouldRun) {
                 if (spawnTimer >= 1000 * gameSpeed) {
-                    dots.add(new Dot(randomGen.nextInt(500), 0, randomGen.nextInt(5) + 5));
+                    dots.add(new Dot(randomGen.nextInt(490), 0, randomGen.nextInt(5) + 5));
                     spawnTimer = 0;
                     gameSpeed -= 0.001;
                 } else {
@@ -49,7 +48,7 @@ public class MainPanel extends javax.swing.JPanel {
                 for (Bullet bullet : bullets) {
                     bullet.modifyY(-2);
                     for (Dot dot : dots) {
-                        if ((dot.getY() == bullet.getY()) && ((dot.getX() <= bullet.getX()) && (dot.getX() + 20 >= bullet.getX()))) {
+                        if ((dot.getY() >= bullet.getY()) && ((dot.getX() <= bullet.getX()) && (dot.getX() + 20 >= bullet.getX()))) {
                             dot.setY(500);
                             bullet.setY(-10);
                             score += dot.getRadius();
