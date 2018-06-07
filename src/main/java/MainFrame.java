@@ -14,6 +14,8 @@ public class MainFrame extends JFrame {
         panel = new MainPanel();
         this.add(panel);
         panel.setBackground(Color.BLACK);
+        setResizable(false);
+        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -61,6 +63,6 @@ public class MainFrame extends JFrame {
 
             }
         });
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+
     }
 }
