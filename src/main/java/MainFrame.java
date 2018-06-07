@@ -5,18 +5,17 @@ import java.awt.event.KeyListener;
 
 public class MainFrame extends JFrame {
 
-    private static MainPanel panel;
     private static boolean debug = true;
 
     private MainFrame(String title) {
         super(title);
-        this.setSize(500, 400);
-        panel = new MainPanel();
-        this.add(panel);
+        setSize(500, 400);
+        MainPanel panel = new MainPanel();
+        add(panel);
         panel.setBackground(Color.BLACK);
         setResizable(false);
-        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-        this.setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
     public static void main(String[] args) {
